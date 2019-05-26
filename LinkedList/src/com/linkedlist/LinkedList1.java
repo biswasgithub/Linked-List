@@ -47,30 +47,57 @@ public class LinkedList1 {
 
 	}
 
+	// get N'th node from last
 	public int getNodeFromLast(LinkedList1 list, int position) {
-		int data= 0;
-		int length=0;
-		int count=0;
+		int data = 0;
+		int length = 0;
+		int count = 0;
 		Node current = this.head;
-		while(current.next != null) {
+		while (current.next != null) {
 			length++;
 			current = current.next;
 		}
 
-		length = (length-position)+1;
+		length = (length - position) + 1;
 		Node curr = this.head;
-		while(curr.next !=null) {
+		while (curr.next != null) {
 			count++;
-			curr= curr.next;
-			if(length == count) {
+			curr = curr.next;
+			if (length == count) {
 				data = curr.data;
 			}
 		}
-		
+
 		return data;
-		
+
 	}
-	
+
+	// detect loop
+	public boolean detectLoop(LinkedList1 list) {
+
+		boolean result = false;
+
+		Node curr = list.head;
+		while (curr.next != null) {
+			curr = curr.next;
+		}
+		curr.next = list.head.next;
+
+		Node fast_pointer = list.head;
+		Node slow_pointer = list.head;
+
+		while (fast_pointer != null && fast_pointer.next != null) {
+			fast_pointer = fast_pointer.next.next;
+			slow_pointer = slow_pointer.next;
+			if (fast_pointer == slow_pointer) {
+				System.out.println(slow_pointer.data +"  "+ fast_pointer.data);
+				result = true;
+				return result;
+			}
+		}
+		return result;
+	}
+
 	public void print() {
 		Node current = this.head;
 		while (current != null) {
@@ -97,8 +124,9 @@ public class LinkedList1 {
 
 		int midData = list.getMiddle(list);
 		System.out.println("\nMiddle data: " + midData);
-		int dataFromLast=list.getNodeFromLast(list, 3);
-		System.out.println("Node from last: "+dataFromLast);
-		
+		int dataFromLast = list.getNodeFromLast(list, 3);
+		System.out.println("Node from last: " + dataFromLast);
+		System.out.println("Is Loop detect: " + list.detectLoop(list));
+
 	}
 }
